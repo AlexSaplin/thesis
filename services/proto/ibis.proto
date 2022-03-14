@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package ibis;
+
+//The Ibis service definition.
+service Ibis {
+    rpc CreateFunction      (CreateFunctionRequest)      returns (CreateFunctionReply);
+    rpc GetFunction         (GetFunctionRequest)         returns (GetFunctionReply);
+    rpc GetFunctionByName   (GetFunctionByNameRequest)   returns (GetFunctionReply);
+    rpc UpdateFunction      (UpdateFunctionRequest)      returns (UpdateFunctionReply);
+    rpc ListFunctions       (ListFunctionsRequest)       returns (ListFunctionsReply);
+}
+
+enum FunctionState {
+    STATE_UNKNOWN = 0;
+    STATE_INIT = 1;
+    STATE_PROCESSING = 2;
+    STATE_READY = 3;
+    STATE_INVALID = 4;
+    STATE_DELETED = 5;
+}
+
+message Function {
+    string        ID = 1;
+    string        OwnerID = 2;
+    FunctionState State = 3;
+    string        ImageURL = 4;
+    string        CodePath = 5;
+    string        Metadata = 6;
+    string        Name = 7;
+    string        ErrStr = 8;
+}
+
+message CreateFunctionRequest {
+    string OwnerID = 1;
+    string Name = 2;
+}
+
+message CreateFunctionReply {
+    Function Function = 1;
+}
+
+message GetFunctionRequest {
+    string ID = 1;
+}
+
+message GetFunctionByNameRequest {
+    string OwnerID = 1;
+    string Name = 2;
+}
+
+message GetFunctionReply {
+    Function Function = 1;
+}
+
+message UpdateFunctionParam {
+    oneof Param {
+        FunctionState State = 1;
+        string        ErrStr = 2;
+        string        ImageURL = 3;
+        string        CodePath = 4;
+        string        Metadata = 5;
+    }
+}
+
+message UpdateFunctionRequest {
+    string ID = 1;
+    repeated UpdateFunctionParam Params = 2;
+}
+
+message UpdateFunctionReply {
+    Function Function = 1;
+}
+
+message ListFunctionsRequest {
+    string OwnerID = 1;
+}
+
+message ListFunctionsReply {
+    repeated Function Functions = 1;
+}
+

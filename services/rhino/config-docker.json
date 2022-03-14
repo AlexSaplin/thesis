@@ -1,0 +1,41 @@
+{
+  "grpc": {
+    "bind": ":8184"
+  },
+  "ibis": {
+    "target": "ibis:8182"
+  },
+  "runner": {
+    "max_clients_per_function": 2,
+    "clients": [
+      {
+        "target": "http://3.126.84.199:12375",
+        "container_host": "http://3.126.84.199"
+      },
+      {
+        "target": "http://18.193.75.83:12375",
+        "container_host": "http://18.193.75.83"
+      },
+      {
+        "target": "http://3.66.227.92:12375",
+        "container_host": "http://3.66.227.92"
+      },
+      {
+        "target": "http://3.126.84.199:12375",
+        "container_host": "http://3.126.84.199"
+      },
+      {
+        "target": "http://18.193.75.83:12375",
+        "container_host": "http://18.193.75.83"
+      },
+      {
+        "target": "http://3.66.227.92:12375",
+        "container_host": "http://3.66.227.92"
+      }
+    ]
+  },
+  "nalogi": {
+    "topic": "run_reports",
+    "target": "kafka:9092"
+  }
+}

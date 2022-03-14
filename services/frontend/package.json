@@ -1,0 +1,55 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Aleksei Saplin (alexsaplin@deepmux.com)",
+  "proxy": "http://deepmux:16000",
+  "dependencies": {
+    "@ant-design/icons": "latest",
+    "@monaco-editor/react": "^4.0.11",
+    "antd": "latest",
+    "axios": "latest",
+    "babel-plugin-import": "latest",
+    "customize-cra": "latest",
+    "event-source-polyfill": "^1.0.22",
+    "history": "latest",
+    "http-proxy-middleware": "latest",
+    "jszip": "^3.6.0",
+    "moment": "^2.29.1",
+    "react": "latest",
+    "react-app-rewired": "latest",
+    "react-device-detect": "latest",
+    "react-dom": "latest",
+    "react-google-login": "latest",
+    "react-redux": "latest",
+    "react-router-dom": "latest",
+    "react-scripts": "latest",
+    "react-vis": "^1.11.7",
+    "redux": "latest",
+    "redux-logger": "latest",
+    "redux-thunk": "latest",
+    "uuid": "^8.3.2",
+    "webpack-bundle-analyzer": "latest"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "rimraf ./build && react-app-rewired build && rimraf ./build/**/*.map",
+    "test": "react-app-rewired test --passWithNoTests",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

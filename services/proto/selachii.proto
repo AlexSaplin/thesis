@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package selachii;
+
+
+service Selachii {
+    rpc LoadModel(LoadRequest) returns (LoadResponse) {};
+    rpc UnloadModel(UnloadRequest) returns (UnloadResponse) {};
+    rpc Run(RunRequest) returns (RunResponse) {};
+}
+
+
+enum ValueType {
+    UNKNOWN = 0;
+
+    FLOAT16 = 1;
+    FLOAT32 = 2;
+    FLOAT64 = 3;
+
+    UINT8 = 4;
+    UINT16 = 5;
+    UINT32 = 6;
+    UINT64 = 7;
+
+    INT8 = 8;
+    INT16 = 9;
+    INT32 = 10;
+    INT64 = 11;
+
+    COMPLEX64 = 12;
+    COMPLEX128 = 13;
+ }
+
+
+message Shape {
+    repeated int64 Value = 1;
+}
+
+message Tensor {
+    ValueType Type = 1;
+    Shape     Shape = 2;
+    bytes     Data = 3;
+}
+
+message ModelMeta {
+    string               ID = 1;
+    repeated Shape       InputShape = 2;
+    repeated Shape       OutputShape = 3;
+    string               Path = 4;
+    ValueType            Type = 5;
+}
+
+message LoadRequest {
+    ModelMeta Model = 1;
+    string    LoadID = 2;
+}
+
+message UnloadRequest {
+    string LoadID = 1;
+}
+
+message LoadResponse {
+    string LoadID = 1;
+}
+
+message UnloadResponse {
+    bool DidChange = 1;
+}
+
+message RunRequest {
+    string LoadID = 1;
+    repeated Tensor Tensor = 2;
+}
+
+message RunResponse {
+    repeated Tensor Tensor = 1;
+}

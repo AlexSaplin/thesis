@@ -1,0 +1,7 @@
+BEGIN;
+
+ALTER TABLE models DROP COLUMN IF EXISTS name;
+
+DROP INDEX IF EXISTS models_owner_id_name;
+
+COMMIT;

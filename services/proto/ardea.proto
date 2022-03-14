@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+package ardea;
+
+
+//type ArdeaService interface {
+//	CreateModel(ctx context.Context, OwnerID string, InputShape, OutputShape []uint64) (model entities.Model, err error)
+//	GetModel(ctx context.Context, modelID string) (entities.Model, error)
+//	UpdateModelState(ctx context.Context, modelID string, state entities.ModelState) (entities.Model, error)
+//	UpdateModelPath(ctx context.Context, modelID, path string) (entities.Model, error)
+//}
+
+//The Ardea service definition.
+service Ardea {
+    rpc CreateModel      (CreateModelRequest)      returns (CreateModelReply);
+    rpc GetModel         (GetModelRequest)         returns (GetModelReply);
+    rpc GetModelByName   (GetModelByNameRequest)   returns (GetModelReply);
+    rpc UpdateModelState (UpdateModelStateRequest) returns (UpdateModelStateReply);
+    rpc UpdateModelPath  (UpdateModelPathRequest)  returns (UpdateModelPathReply);
+    rpc ListModels       (ListModelsRequest)       returns (ListModelsReply);
+}
+
+enum ValueType {
+    UNKNOWN = 0;
+
+    FLOAT16 = 1;
+    FLOAT32 = 2;
+    FLOAT64 = 3;
+
+    UINT8 = 4;
+    UINT16 = 5;
+    UINT32 = 6;
+    UINT64 = 7;
+
+    INT8 = 8;
+    INT16 = 9;
+    INT32 = 10;
+    INT64 = 11;
+
+    COMPLEX64 = 12;
+    COMPLEX128 = 13;
+ }
+
+enum ModelState {
+    STATE_UNKNOWN = 0;
+    STATE_INIT = 1;
+    STATE_PROCESSING = 2;
+    STATE_READY = 3;
+    STATE_INVALID = 4;
+    STATE_DELETED = 5;
+}
+
+message NullInt64 {
+    int64 Value = 1;
+    bool IsValid = 2;
+}
+
+message Shape {
+    repeated NullInt64 Value = 1;
+}
+
+message Model {
+    string               ID = 1;
+    string               OwnerID = 2;
+    ModelState           State = 3;
+    repeated Shape       InputShape = 4;
+    repeated Shape       OutputShape = 5;
+    string               Path = 6;
+    string               Name = 7;
+    ValueType            Type = 8;
+    bool                 ErrStrSet = 9;
+    string               ErrStr = 10;
+}
+
+message CreateModelRequest {
+    string               OwnerID = 1;
+    string               Name = 2;
+    repeated Shape       InputShape = 3;
+    repeated Shape       OutputShape = 4;
+    ValueType            Type = 5;
+}
+
+message CreateModelReply {
+    Model Model = 1;
+}
+
+message GetModelRequest {
+    string ID = 1;
+}
+
+message GetModelByNameRequest {
+    string OwnerID = 1;
+    string Name = 2;
+}
+
+message GetModelReply {
+    Model Model = 1;
+}
+
+message UpdateModelStateRequest {
+    string     ID = 1;
+    ModelState State = 2;
+
+    bool   ErrStrSet = 3;
+    string ErrStr = 4;
+}
+
+message UpdateModelStateReply {
+    Model Model = 1;
+}
+
+message UpdateModelPathRequest {
+    string ID = 1;
+    string Path = 2;
+}
+
+message ListModelsRequest {
+    string OwnerID = 1;
+}
+
+message ListModelsReply {
+    repeated Model Models = 1;
+}
+
+message UpdateModelPathReply {
+    Model Model = 1;
+}
+

@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package slav;
+
+
+service Slav {
+  rpc CreateContainer (CreateContainerRequest) returns (CreateContainerReply);
+  rpc UpdateContainer (UpdateContainerRequest) returns (UpdateContainerReply);
+  rpc GetContainer    (GetContainerRequest)    returns (GetContainerReply);
+  rpc DeleteContainer (DeleteContainerRequest) returns (DeleteContainerReply);
+  rpc ListContainers  (ListContainersRequest)  returns (ListContainersReply);
+}
+
+message KV {
+  string Key = 1;
+  string Value = 2;
+}
+
+message AuthItem {
+  string Username = 1;
+  string Password = 2;
+  string Registry = 3;
+}
+
+enum InstanceType {
+  STARTER = 0;
+  INFERENCE = 1;
+}
+
+enum StateType {
+  RUNNING = 0;
+  UPDATING = 1;
+  ERROR = 2;
+  UNKNOWN = 3;
+}
+
+message Container {
+  string Name = 1;
+  uint32 Scale = 2;
+  InstanceType Instance = 3;
+  string Image = 4;
+  uint32 Port = 5;
+  string URL = 6;
+  repeated KV Env = 7;
+  repeated string Auth = 8;
+}
+
+message CreateContainerRequest {
+  string OwnerID = 1;
+  string Name = 2;
+  uint32 Scale = 3;
+  InstanceType Instance = 4;
+  string Image = 5;
+  uint32 Port = 6;
+  repeated KV Env = 7;
+  repeated AuthItem Auth = 8;
+}
+
+message CreateContainerReply {
+  Container Container = 1;
+  string Error = 2;
+}
+
+message NullString {
+  string Value = 1;
+  bool IsValid = 2;
+}
+
+message NullUInt32 {
+  uint32 Value = 1;
+  bool IsValid = 2;
+}
+
+message NullInstanceType {
+  InstanceType Value = 1;
+  bool IsValid = 2;
+}
+
+message UpdateContainerRequest {
+  string Name = 1;
+  string OwnerID = 2;
+  NullUInt32 Scale = 3;
+  NullInstanceType Instance = 4;
+  NullString Image = 5;
+}
+
+message UpdateContainerReply {
+  Container Container = 1;
+}
+
+message GetContainerRequest {
+  string Name = 1;
+  string OwnerID = 2;
+}
+
+message GetContainerReply {
+  Container Container = 1;
+  StateType State = 2;
+  string Error = 3;
+}
+
+message DeleteContainerRequest {
+  string Name = 1;
+  string OwnerID = 2;
+}
+
+message DeleteContainerReply {
+}
+
+message ListContainersRequest {
+  string OwnerID = 1;
+}
+
+message ListContainersReply {
+  repeated Container Containers = 1;
+}

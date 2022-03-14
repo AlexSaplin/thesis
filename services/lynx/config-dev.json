@@ -1,0 +1,48 @@
+{
+    "api": {
+        "bind": "0.0.0.0:8000",
+        "users": [
+            {
+                "token": "TEST",
+                "user_id": "b6d233ed-424a-46a6-a163-ef6272d5d340"
+            }
+        ],
+        "containers_url": "deepmux-apps.com"
+    },
+    "ibis": {
+        "target": "localhost:8182"
+    },
+    "rhino": {
+        "target": "localhost:8184"
+    },
+    "ovis": {
+        "target": "amqp://localhost:5672",
+        "queue": "models_verify"
+    },
+    "s3": {
+        "target": "localhost:9000",
+        "models_bucket": "models",
+        "functions_bucket": "functions",
+        "access_key": "minioadmin",
+        "secret_key": "minioadmin"
+    },
+    "auth": {
+        "target": "app.deepmux.com"
+    },
+    "gorilla": {
+        "target": "localhost:8085"
+    },
+    "slav": {
+        "target": "localhost:8086"
+    },
+    "arietes": {
+        "topic": "function-build-events",
+        "target": "127.0.0.1:9092"
+    },
+    "picus": {
+        "target": "localhost:8087"
+    },
+    "prometheus": {
+        "target": "localhost:9090"
+    }
+}

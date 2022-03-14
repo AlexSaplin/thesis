@@ -1,0 +1,15 @@
+{
+  "grpc": {
+    "bind": ":8084"
+  },
+  "ardea": {
+    "target": "ardea:8082"
+  },
+  "selachii": {
+    "target": "selachii:8083"
+  },
+  "nalogi": {
+    "topic": "run_reports",
+    "target": "kafka:9092"
+  }
+}

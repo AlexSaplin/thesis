@@ -1,0 +1,21 @@
+{
+  "grpc": {
+    "bind": ":8184"
+  },
+  "ibis": {
+    "target": "localhost:8182"
+  },
+  "nalogi": {
+    "topic": "run_reports",
+    "target": "127.0.0.1:9092"
+  },
+  "runner": {
+    "max_clients_per_function": 1,
+    "clients": [
+      {
+        "target": "http://3.126.84.199:12375",
+        "container_host": "http://3.126.84.199"
+      }
+    ]
+  }
+}

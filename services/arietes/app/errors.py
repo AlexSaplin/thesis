@@ -1,0 +1,6 @@
+class ConfigValidationError(Exception):
+    ...
+
+
+class ImageError(Exception):
+    ...

@@ -1,0 +1,8 @@
+{
+  "server": {
+    "bind": ":8182"
+  },
+  "db": {
+    "target": "postgres://postgres:postgres@postgres_ibis:5432/postgres?sslmode=disable"
+  }
+}

@@ -1,0 +1,6 @@
+faust==1.10.4
+grpcio==1.33.1
+grpcio-reflection==1.33.1
+Jinja2==2.11.2
+PyYAML==5.3.1
+requests==2.24.0

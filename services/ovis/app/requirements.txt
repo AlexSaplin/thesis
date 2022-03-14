@@ -1,0 +1,7 @@
+pydantic==0.32.2
+grpcio==1.28.1
+numpy==1.18.4
+requests==2.22.0
+onnxruntime==1.2.0
+pika==1.1.0
+protobuf==3.12.2

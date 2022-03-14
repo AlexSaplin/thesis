@@ -1,0 +1,186 @@
+{
+    "api": {
+        "bind": "0.0.0.0:8000",
+        "users": [
+            {
+                "token": "DEV_ALEX_24B58CC6F73BAC39",
+                "user_id": "b6d233ed-424a-46a6-a163-ef6272d5d340"
+            },
+            {
+                "token": "DEV_MAX_F41B6DBC58859701",
+                "user_id": "ae8c6e65-ed22-4ef3-bd77-bc3b2fc099e6"
+            },
+            {
+                "token": "DEV_YAR_8480A55B989E3C9E",
+                "user_id": "e1d69a96-e249-4b0c-90db-96bf563dda28"
+            },
+            {
+                "token": "DEV_MIX_956AB17D0D8EDCCE",
+                "user_id": "8dfd8fa9-3f2c-467d-a5f0-3ca8e256edb3"
+            },
+            {
+                "token": "DEV_IVN_505F885D7D5DF2D6",
+                "user_id": "6b1cf1f1-ef9d-437b-a6e7-d9b3c4ad46d5"
+            },
+            {
+                "token": "DLS_02_0BAFCF278AAE5986",
+                "user_id": "7661a4ee-2616-473e-9360-0aae60491ae7"
+            },
+            {
+                "token": "DLS_03_2AEFBDE1FE8C87D1",
+                "user_id": "00d69992-798e-4923-95dc-0cabfaecebac"
+            },
+            {
+                "token": "DLS_04_0249237C9F655576",
+                "user_id": "46d02462-3453-4154-89f6-5f0cd5029389"
+            },
+            {
+                "token": "DLS_05_C3C22E972EB710F9",
+                "user_id": "e8b53c04-3fc5-4294-b77e-95a6b21f4403"
+            },
+            {
+                "token": "DLS_06_B4FB96983A67254D",
+                "user_id": "98b8f46d-0f5b-4dd3-87cf-6389f083ce83"
+            },
+            {
+                "token": "DLS_07_A5A78786358929FE",
+                "user_id": "51b8d2cc-ab49-4dad-a043-0abac3679ca4"
+            },
+            {
+                "token": "DLS_08_2D98500F70B2AEFD",
+                "user_id": "e7cfb052-04ec-483e-8f67-2ab77017780b"
+            },
+            {
+                "token": "DLS_09_77E04474C7283890",
+                "user_id": "a7d85dbe-1b2a-4060-9630-a2fc29121441"
+            },
+            {
+                "token": "DLS_10_1A9F23276D396697",
+                "user_id": "a771e1ce-0184-49cc-a930-90638ad38d13"
+            },
+            {
+                "token": "DLS_11_07BE45B168FE7085",
+                "user_id": "0102bda6-8faf-4380-9cdd-8c049071bdda"
+            },
+            {
+                "token": "DLS_12_18C5C29CF19A6EEB",
+                "user_id": "b0dcfec6-7a18-4055-bb46-33d7165fd754"
+            },
+            {
+                "token": "DLS_13_125BE9E2052D6927",
+                "user_id": "83a1d4ff-2b96-4935-9880-fd8661116c0b"
+            },
+            {
+                "token": "DLS_14_C91D8EF28089EDEC",
+                "user_id": "85156450-ff5d-457a-9a9e-5d7a64fc9b02"
+            },
+            {
+                "token": "DLS_15_15514B00436FA31B",
+                "user_id": "7da12da3-41f1-46bd-accf-13e7632f2b6c"
+            },
+            {
+                "token": "DLS_16_25C7FF985CF6CDAA",
+                "user_id": "a72c8425-d68e-4cf0-9a41-2838141c70c5"
+            },
+            {
+                "token": "DLS_17_FC46319A50986322",
+                "user_id": "d04cd376-0832-488b-84b0-ad4870db9e1e"
+            },
+            {
+                "token": "DLS_18_1050F0237F378F5C",
+                "user_id": "190a7ba9-0782-4df5-841a-78e96cba6f0e"
+            },
+            {
+                "token": "DLS_19_C76F75314351D637",
+                "user_id": "c218731c-f180-4d53-8266-faf9e21a2df2"
+            },
+            {
+                "token": "DLS_20_33960EB85A3724FB",
+                "user_id": "1b997062-176c-403a-8d15-22b2064a6bf0"
+            },
+            {
+                "token": "DLS_21_94D655BACD6A2EC0",
+                "user_id": "441b4f21-2bc4-4c6d-8425-f83e401700c7"
+            },
+            {
+                "token": "DLS_22_D92440F59D6AD6FC",
+                "user_id": "8e3b6430-1a60-4f7f-a579-1cf9918a9e7a"
+            },
+            {
+                "token": "DLS_23_A06E5E1FE60F392E",
+                "user_id": "93277665-eaa7-4053-ad90-97b7cbaeaf8f"
+            },
+            {
+                "token": "DLS_24_58140028B82C052D",
+                "user_id": "dc3a5541-5e7e-4646-bea3-c844ce164f0a"
+            },
+            {
+                "token": "DLS_25_B1E25A3ED0763641",
+                "user_id": "d789b1f9-d9cd-4eb4-b71d-0258fd747b6d"
+            },
+            {
+                "token": "DLS_26_70A2574CED15991B",
+                "user_id": "bd95e5b3-754d-4d55-9925-a8461ea860db"
+            },
+            {
+                "token": "DLS_27_8254C87E611FE7DC",
+                "user_id": "e2647c82-31fd-42c8-aee9-c07640493e42"
+            },
+            {
+                "token": "DLS_28_9129365046D2FBEA",
+                "user_id": "a618a465-09d5-4632-a4a4-16d70df4221e"
+            },
+            {
+                "token": "DLS_29_5453E8A3B1BC0DD2",
+                "user_id": "936a2920-5037-47f0-8901-8e8b649f9764"
+            },
+            {
+                "token": "DLS_30_52EBF0FEE11617FE",
+                "user_id": "0f15c387-2f8d-4abc-b11a-150c1cdc31ca"
+            }
+        ],
+        "containers_url": "deepmux-apps.com"
+    },
+    "ardea": {
+        "target": "ardea:8082"
+    },
+    "hippo": {
+        "target": "hippo:8084"
+    },
+    "ovis": {
+        "target": "amqp://rabbitmq:5672",
+        "queue": "models_verify"
+    },
+    "ibis": {
+        "target": "ibis:8182"
+    },
+    "rhino": {
+        "target": "rhino:8184"
+    },
+    "s3": {
+        "target": "s3:9000",
+        "models_bucket": "models",
+        "functions_bucket": "functions",
+        "access_key": "minioadmin",
+        "secret_key": "minioadmin"
+    },
+    "auth": {
+        "target": "django:16000"
+    },
+    "gorilla": {
+        "target": "gorilla:8085"
+    },
+    "slav": {
+        "target": "slav:8086"
+    },
+    "arietes": {
+        "topic": "function-build-events",
+        "target": "kafka:9092"
+    },
+    "picus": {
+        "target": "picus:8087"
+    },
+    "prometheus": {
+        "target": "http://prometheus:9090"
+    }
+}

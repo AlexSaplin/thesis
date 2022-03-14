@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package tesseract;
+
+
+//The Tesseract service definition.
+service Tesseract {
+    rpc Apply (ApplyRequest) returns (ApplyResponse);
+    rpc GetStatus (GetStatusRequest) returns (GetStatusResponse);
+    rpc Delete (DeleteRequest) returns (DeleteResponse);
+}
+
+message KV {
+    string Key = 1;
+    string Value = 2;
+}
+
+message ApplyRequest {
+    string Name = 1;  // container name
+    string ID = 2;    // unique id of the servive
+    string DNS = 3;   // example.containers.com
+    uint32 Scale = 4; // 5
+    uint32 CPU = 5;   // 10 (cores)
+    uint32 RAM = 6;   // 2048 (mb)
+    string GPU = 7;   // TESLAT4 (we will agree on labels)
+    uint32 Port = 8;  // Container http port
+    string Image = 9;
+    repeated KV Env = 10;
+    string Auth = 11;
+}
+
+message ApplyResponse {} // see the error
+
+message GetStatusRequest {
+    string ID = 1; // unique id of the service
+}
+
+enum Status {
+    UNKNOWN = 0;
+    RUNNING = 1;
+    UPDATING = 2;
+    ERROR = 3;
+}
+
+message GetStatusResponse {
+    Status Status = 1;
+    string Error = 2; // Error to pass to the user if status is error
+}
+
+message DeleteRequest {
+  string ID = 1;
+}
+
+message DeleteResponse {
+}

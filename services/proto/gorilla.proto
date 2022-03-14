@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package gorilla;
+
+
+//The Gorilla service definition.
+service Gorilla {
+  rpc AddDeltas  (AddDeltasRequest)  returns (AddDeltasResponse);
+  rpc GetDeltas  (GetDeltasRequest)  returns (GetDeltasResponse);
+
+  rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse);
+}
+
+message Delta {
+  int64  Date = 1; // Unix timestamp of date in UTC
+  string Category = 2;
+  double Balance = 3;
+  string OwnerID = 4;
+  string ObjectID = 5;
+  string ObjectType = 6;
+}
+
+message AddDeltasRequest {
+  repeated Delta Deltas = 1;
+}
+
+message AddDeltasResponse {}
+
+message GetDeltasRequest {
+  string OwnerID = 1;
+  string ObjectID = 2; // Empty means all models/containers
+  string ObjectType = 3;
+  int64  FirstDate = 4; // Unix timestamp of date in UTC
+  int64  LastDate = 5; // Unix timestamp of date in UTC
+  bool   UseCategories = 6; // If true split by categories
+}
+
+message GetDeltasResponse {
+  repeated Delta Deltas = 1;
+}
+
+
+message GetBalanceRequest {
+  string OwnerID = 1;
+}
+
+message GetBalanceResponse {
+  double Balance = 1;
+}

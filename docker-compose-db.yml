@@ -1,0 +1,114 @@
+version: "3.5"
+
+services: 
+  rabbitmq:
+    image: rabbitmq:3
+    ports:
+      - "127.0.0.1:5672:5672"
+    networks:
+      - deepmux
+
+  postgres:
+    image: postgres:11
+    environment: 
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+    networks:
+      - deepmux
+
+  postgres_gorilla:
+    image: postgres:11
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "127.0.0.1:5433:5432"
+    networks:
+      - deepmux
+
+  postgres_django:
+    image: postgres:11
+    environment: 
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "127.0.0.1:5434:5432"
+    networks:
+      - deepmux
+
+  postgres_slav:
+    image: postgres:11
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "127.0.0.1:5435:5432"
+    networks:
+      - deepmux
+
+  postgres_ibis:
+    image: postgres:11
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "127.0.0.1:5436:5432"
+    networks:
+      - deepmux
+
+  s3:
+    image: minio/minio
+    ports:
+      - "127.0.0.1:9000:9000"
+    command:
+      - "server"
+      - "/data"
+    networks:
+      - deepmux
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    ports:
+      - "127.0.0.1:2181:2181"
+    networks:
+      - deepmux
+
+  kafka:
+    image: wurstmeister/kafka:2.12-2.3.0
+    ports:
+      - "127.0.0.1:9094:9094"
+    container_name: kafka
+    networks:
+      - deepmux
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://127.0.0.1:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_LOG_DIR: /kafka_data
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka -Dcom.sun.management.jmxremote.rmi.port=1099"
+      JMX_PORT: 1099
+      KAFKA_RETENTION_MS: -1
+      KAFKA_OFFSETS_RETENTION_MINUTES: 40320
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    
+  kafka-manager:
+    image: sheepkiller/kafka-manager:latest
+    ports:
+      - "127.0.0.1:9002:9000"
+    depends_on:
+      - zookeeper
+      - kafka
+    networks:
+      - deepmux
+    environment:
+      ZK_HOSTS: zookeeper:2181
+      APPLICATION_SECRET: isthislongenough22
+      KM_ARGS: -Djava.net.preferIPv4Stack=true
+
+networks:
+  deepmux:
+    external:
+      name: deepmux

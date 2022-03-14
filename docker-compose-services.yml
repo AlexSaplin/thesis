@@ -1,0 +1,285 @@
+version: "3.5"
+
+services: 
+  lynx:
+    image: tna0y/ml-executor:lynx-dev
+    build: services/lynx
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    command:
+      - "-config"
+      - "config-docker.json"
+    networks:
+      - deepmux
+  #  depends_on:
+  #    - ardea
+  #    - hippo
+      
+  #ardea:
+  #  image: tna0y/ml-executor:ardea-dev
+  #  build: services/ardea
+  #  command:
+  #    - "-config"
+  #    - "config-docker.json"
+  #  networks:
+  #    - deepmux
+
+  ibis:
+    image: tna0y/ml-executor:ibis-dev
+    build: services/ibis
+    command:
+      - "-config"
+      - "config-docker.json"
+    networks:
+      - deepmux
+
+  gorilla:
+    image: tna0y/ml-executor:gorilla-dev
+    build: services/gorilla
+    command:
+      - "-config"
+      - "config-docker.json"
+    networks:
+      - deepmux
+  
+  #hippo:
+  #  image: tna0y/ml-executor:hippo-dev
+  #  build: services/hippo
+  #  command:
+  #    - "-config"
+  #    - "config-docker.json"
+  #  networks:
+  #    - deepmux
+  #  depends_on:
+  #    - ardea
+      # - selachii
+  
+  rhino:
+    image: tna0y/ml-executor:rhino-dev
+    build: services/rhino
+    command:
+      - "-config"
+      - "config-docker.json"
+    networks:
+      - deepmux
+    depends_on:
+      - ibis
+
+  #selachii:
+  #  image: tna0y/ml-executor:selachii-dev
+  #  build: services/selachii
+  #  command:
+  #    - "--storage"
+  #    - "http://s3:9000/"
+  #  networks:
+  #    - deepmux
+
+  #ovis:
+  #  image: tna0y/ml-executor:ovis-dev
+  #  build: services/ovis
+  #  environment:
+  #    - ARDEA_TARGET=ardea:8082
+  #    - MODELS_STORE_TARGET=http://s3:9000
+  #    - RABBITMQ_TARGET=rabbitmq
+  #  networks:
+  #    - deepmux
+
+  slav:
+    image: tna0y/ml-executor:slav-dev
+    build: services/slav
+    environment:
+      - TESSERACT_TARGET=tesseract:8092
+      - GORILLA_TARGET=gorilla:8085
+    networks:
+       - deepmux
+
+  tesseract:
+    image: tna0y/ml-executor:tesseract-dev
+    build: services/tesseract
+    environment:
+      - K8S_CONFIG=YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhvcml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VONVJFTkRRV0pEWjBGM1NVSkJaMGxDUVVSQlRrSm5hM0ZvYTJsSE9YY3dRa0ZSYzBaQlJFRldUVkpOZDBWUldVUldVVkZFUlhkd2NtUlhTbXdLWTIwMWJHUkhWbnBOUWpSWVJGUkpkMDFVUVhsT2FrbDRUWHBWZWs5V2IxaEVWRTEzVFZSQmVVNUVTWGhOZWxWNlQxWnZkMFpVUlZSTlFrVkhRVEZWUlFwQmVFMUxZVE5XYVZwWVNuVmFXRkpzWTNwRFEwRlRTWGRFVVZsS1MyOWFTV2gyWTA1QlVVVkNRbEZCUkdkblJWQkJSRU5EUVZGdlEyZG5SVUpCVEVGbkNtZHJRME5JZDNvNE5IcFJTRmcyY1d4dlFrdHdaelpTVVVsbGNVSnVTa1JpYzNoVlVXeEpkR1l2UTA1dFREVlFNVm96WW5GM01FMTVZVmgwVnpSbE5sSUtNMVpDTjFaYU1HNURPR05aV1ZsS2RsSjRlalJTZEM5ck1UVkhOWGN4VkRGRUwzSnFTbTl6UjNKaVZ6bHFZbkZQYUU5b1dHeERWMGQ0YWpWd09FTjJid3BUWmpneGNYRjNOVzVKV1M5Rk1XOVllRlE0VjBGR1lXdFNUbEpxUmtadmNtc3hVbE5tY2poMU0yVmFaRUp4VTNCbU9XSjFlVE5QTTI1amJ6bHhhM1p5Q2xoUlQzVTBTemRwY25oV1ZtTXZVak5NWVROTkswdEtjV3d3ZDJwWWNWTnBTWEo2V25GdWVrRldiR2xQVUZsUWRFd3JSMll6Wm5vck5HaHVVRWhPUmtFS1F6ZFJPRWhyTjJKRU1XcFJkV3BzZUZaaU1YZzJkVFJxWjBSeVJrdGFWak5yYUdKMWRWTjJVVEExU2pWclluWjJSVWRTVG1kNFZDdE5UV1Y2WlZRdlRRbzFhMjlEZUcxRFFWTnZhVEZxTkhsRk5HMWpRMEYzUlVGQllVMXFUVU5GZDBSbldVUldVakJRUVZGSUwwSkJVVVJCWjB0clRVRTRSMEV4VldSRmQwVkNDaTkzVVVaTlFVMUNRV1k0ZDBSUldVcExiMXBKYUhaalRrRlJSVXhDVVVGRVoyZEZRa0ZEV21nclozQnFRVXBGVTNKNmVFSXdkVkV4WkRsMVoyRnBUMDhLV0RGVWJFY3dkbWRrVVZCYWRXUnBRWFZWZFdSblRVbEVOU3RTT1Rka00zVnFkWGhOWlRKNFVTdHRObFpUYjJaQmJFTlBjbWx5Y0VGcFRrcG5XRVZNYmdvclZGRkRSalpuUjNwelMzbzNOamRXU1RSbFdqaE9LMnBzYURoS01GWlJjbEZ1VDNCcFQzbGtiMWhFTW1SMlREWlRUM2R0YnpONGJWQlhOM0psUjFnekNsaHVSelJ1WjJSNVdrcGxRWGN2UlZSd1dYZDVLemhJTTNwS1RYVjRaalJqZUZOVllrZENZbnB5VkhaT1JUTkZUa3hFY2xORGVFODVSakZhTVNzeVRrd0taMlpDU20wNE1qWmFNV3RDTkdOemFWUmhPSFZpZUN0Mk0yeENkM1ZKUm1aeU0yOVhaREYxU2xVd1dESkNhMkkxY0VSSGRsZDVOMk5SZGk4M05EVkllUXBPVGt4ck5HeHNlV0ozY1RaS2VXbGhUMUl3S3pKbmNYVnJValprUmprNWVYUTJkbWxLVTNoU1dWVldUMjFNUWxwRkwzWklNMmhDYzA5bFJUMEtMUzB0TFMxRlRrUWdRMFZTVkVsR1NVTkJWRVV0TFMwdExRbz0KICAgIHNlcnZlcjogaHR0cHM6Ly9DRDA2OEFCMkQ3Q0ZCQzlEQURBRDMzMEI5QzM4RDA3Ny5ncjcuZXUtY2VudHJhbC0xLmVrcy5hbWF6b25hd3MuY29tCiAgbmFtZTogYXJuOmF3czpla3M6ZXUtY2VudHJhbC0xOjA1NTgyNzQ1NjY3MjpjbHVzdGVyL2RlZXBtdXgtY29udGFpbmVycwpjb250ZXh0czoKLSBjb250ZXh0OgogICAgY2x1c3RlcjogYXJuOmF3czpla3M6ZXUtY2VudHJhbC0xOjA1NTgyNzQ1NjY3MjpjbHVzdGVyL2RlZXBtdXgtY29udGFpbmVycwogICAgdXNlcjogYXJuOmF3czpla3M6ZXUtY2VudHJhbC0xOjA1NTgyNzQ1NjY3MjpjbHVzdGVyL2RlZXBtdXgtY29udGFpbmVycwogIG5hbWU6IGFybjphd3M6ZWtzOmV1LWNlbnRyYWwtMTowNTU4Mjc0NTY2NzI6Y2x1c3Rlci9kZWVwbXV4LWNvbnRhaW5lcnMKY3VycmVudC1jb250ZXh0OiBhcm46YXdzOmVrczpldS1jZW50cmFsLTE6MDU1ODI3NDU2NjcyOmNsdXN0ZXIvZGVlcG11eC1jb250YWluZXJzCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KdXNlcnM6Ci0gbmFtZTogYXJuOmF3czpla3M6ZXUtY2VudHJhbC0xOjA1NTgyNzQ1NjY3MjpjbHVzdGVyL2RlZXBtdXgtY29udGFpbmVycwogIHVzZXI6CiAgICBleGVjOgogICAgICBhcGlWZXJzaW9uOiBjbGllbnQuYXV0aGVudGljYXRpb24uazhzLmlvL3YxYWxwaGExCiAgICAgIGFyZ3M6CiAgICAgIC0gLS1yZWdpb24KICAgICAgLSBldS1jZW50cmFsLTEKICAgICAgLSBla3MKICAgICAgLSBnZXQtdG9rZW4KICAgICAgLSAtLWNsdXN0ZXItbmFtZQogICAgICAtIGRlZXBtdXgtY29udGFpbmVycwogICAgICBjb21tYW5kOiBhd3MKICAgICAgZW52OiBudWxsCg==
+      - AWS_CONFIG=W2RlZmF1bHRdCiAgICBhd3NfYWNjZXNzX2tleV9pZCA9IEFLSUFJUU9UUjUzNUVQSUFaV0dRCiAgICBhd3Nfc2VjcmV0X2FjY2Vzc19rZXkgPSBZUUZiZzVZcmthdjkxbERtUUxzVXAxemNhdGRDb3NzWFJIT3dkYWpOCgo=
+    networks:
+      - deepmux
+
+  nalogi:
+    image: tna0y/ml-executor:nalogi-dev
+    build: services/nalogi
+    environment:
+      - KAFKA_BROKER=kafka
+      - INPUT_TOPIC=run_reports
+      - BILLING_FREQUENCY_SECONDS=15
+      - GORILLA_TARGET=gorilla:8085
+    networks:
+      - deepmux
+
+  arietes:
+    image: tna0y/ml-executor:arietes-dev
+    build: services/arietes
+    environment:
+      - KAFKA_BROKER=kafka
+      - INPUT_TOPIC=function-build-events
+      - IBIS_TARGET=ibis:8182
+      - REGISTRY_URL=52.59.203.222:5000
+      - S3_TARGET=http://s3:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - deepmux
+
+  bubo:
+    image: tna0y/ml-executor:bubo-dev
+    build: services/bubo
+    ports:
+      - "24224:24224"
+    networks:
+      - deepmux
+
+  picus:
+    image: tna0y/ml-executor:picus-dev
+    build: services/picus
+    networks:
+      - deepmux
+
+  prometheus:
+    build: services/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - deepmux
+
+  django:
+    build: 
+      context: ./services/django
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:16000"
+    restart: on-failure
+    volumes:
+      - ./services/django/apps:/opt/services/django/apps
+      - ./services/django/django_server:/opt/services/django/django_server
+      - ./services/django/gorilla_pb:/opt/services/django/gorilla_pb
+      - ./services/django/ardea_pb:/opt/services/django/ardea_pb
+      - ./services/django/manage.py:/opt/services/django/manage.py
+      - ./services/django/requirements.txt:/opt/services/django/requirements.txt
+      - ./services/django/data/media:/opt/services/django/media
+      - ./services/django/data/db:/opt/services/django/db
+      - ./services/django/data/logs/django:/opt/services/django/logs
+      - ./services/django/data/etc:/opt/services/django/etc # Special folder for sharing some unclassified data
+    environment:
+      - GOOGLE_OAUTH_CLIENT_ID=1056705734975-0d6en9d0t8ii656410png644b32b07dv.apps.googleusercontent.com
+      - FACEBOOK_OAUTH_APP_ACCESS_TOKEN=275958890324461|KH7aXlS1sWIUa8-uWXq8049p98Q
+      - FACEBOOK_OAUTH_SECRET=949d93b40b8dd225d90c3fee6492a672
+      - YANDEX_KASSA_ACCOUNT_ID=721683
+      - YANDEX_KASSA_SECRET=test_isWEYqzYfdn5VHmLQoxCv60woS04FdLmvL1XshkW2cM
+      - GORILLA_TARGET=gorilla:8085
+      - ARDEA_TARGET=ardea:8082
+      - DJANGO_SECRET=$dqvc!)h8-3r%p4=q#9^(-ja@o5ai^1f1fv6h@y^qi!h4qu79n
+      - NEW_USER_STARTING_BALANCE=10
+      - DEBUG=true
+      - STRIPE_SECRET=sk_test_51GwsZbH9SqgtPa5q4mHeHgG1XZOif33rDOHch0ww63QVbC7vstwHK0pBT6r3Negg3IICQFcH9Kegr3rb0teqkpfo00FZavwRLe
+      - STRIPE_PRICE_ID=price_1ITtZ2H9SqgtPa5qm96FwPcL
+    networks:
+      - deepmux
+
+  django_celery_scheduler:
+    build:
+      context: ./services/django
+      dockerfile: Dockerfile.dev
+    restart: on-failure
+    volumes:
+      - ./services/django/apps:/opt/services/django/apps
+      - ./services/django/django_server:/opt/services/django/django_server
+      - ./services/django/gorilla_pb:/opt/services/django/gorilla_pb
+      - ./services/django/ardea_pb:/opt/services/django/ardea_pb
+      - ./services/django/manage.py:/opt/services/django/manage.py
+      - ./services/django/requirements.txt:/opt/services/django/requirements.txt
+      - ./services/django/data/media:/opt/services/django/media
+      - ./services/django/data/db:/opt/services/django/db
+      - ./services/django/data/logs/django:/opt/services/django/logs
+      - ./services/django/data/etc:/opt/services/django/etc # Special folder for sharing some unclassified data
+    environment:
+      - GOOGLE_OAUTH_CLIENT_ID=1056705734975-0d6en9d0t8ii656410png644b32b07dv.apps.googleusercontent.com
+      - YANDEX_KASSA_ACCOUNT_ID=721683
+      - YANDEX_KASSA_SECRET=test_isWEYqzYfdn5VHmLQoxCv60woS04FdLmvL1XshkW2cM
+      - GORILLA_TARGET=gorilla:8085
+      - ARDEA_TARGET=ardea:8082
+      - DJANGO_SECRET=$dqvc!)h8-3r%p4=q#9^(-ja@o5ai^1f1fv6h@y^qi!h4qu79n
+      - NEW_USER_STARTING_BALANCE=10
+      - DEBUG=true
+      - STRIPE_SECRET=sk_test_51GwsZbH9SqgtPa5q4mHeHgG1XZOif33rDOHch0ww63QVbC7vstwHK0pBT6r3Negg3IICQFcH9Kegr3rb0teqkpfo00FZavwRLe
+      - STRIPE_PRICE_ID=price_1ITtZ2H9SqgtPa5qm96FwPcL
+    entrypoint:
+      - "celery"
+      - "-A"
+      - "django_server"
+      - "beat"
+      - "-l"
+      - "info"
+    depends_on:
+      - django
+    networks:
+      - deepmux
+
+  django_celery_worker:
+    build:
+      context: ./services/django
+      dockerfile: Dockerfile.dev
+    restart: on-failure
+    volumes:
+      - ./services/django/apps:/opt/services/django/apps
+      - ./services/django/django_server:/opt/services/django/django_server
+      - ./services/django/gorilla_pb:/opt/services/django/gorilla_pb
+      - ./services/django/ardea_pb:/opt/services/django/ardea_pb
+      - ./services/django/manage.py:/opt/services/django/manage.py
+      - ./services/django/requirements.txt:/opt/services/django/requirements.txt
+      - ./services/django/data/media:/opt/services/django/media
+      - ./services/django/data/db:/opt/services/django/db
+      - ./services/django/data/logs/django:/opt/services/django/logs
+      - ./services/django/data/etc:/opt/services/django/etc # Special folder for sharing some unclassified data
+    environment:
+      - GOOGLE_OAUTH_CLIENT_ID=1056705734975-0d6en9d0t8ii656410png644b32b07dv.apps.googleusercontent.com
+      - YANDEX_KASSA_ACCOUNT_ID=721683
+      - YANDEX_KASSA_SECRET=test_isWEYqzYfdn5VHmLQoxCv60woS04FdLmvL1XshkW2cM
+      - GORILLA_TARGET=gorilla:8085
+      - ARDEA_TARGET=ardea:8082
+      - DJANGO_SECRET=$dqvc!)h8-3r%p4=q#9^(-ja@o5ai^1f1fv6h@y^qi!h4qu79n
+      - NEW_USER_STARTING_BALANCE=10
+      - DEBUG=true
+      - STRIPE_SECRET=sk_test_51GwsZbH9SqgtPa5q4mHeHgG1XZOif33rDOHch0ww63QVbC7vstwHK0pBT6r3Negg3IICQFcH9Kegr3rb0teqkpfo00FZavwRLe
+      - STRIPE_PRICE_ID=price_1ITtZ2H9SqgtPa5qm96FwPcL
+    entrypoint:
+      - "celery"
+      - "-A"
+      - "django_server"
+      - "worker"
+      - "-l"
+      - "info"
+    depends_on:
+      - django
+    networks:
+      - deepmux
+
+  frontend:
+    build:
+      context: ./services/frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./services/frontend/public:/opt/services/frontend/public
+      - ./services/frontend/src:/opt/services/frontend/src
+      - ./services/frontend/config-overrides.js:/opt/services/frontend/config-overrides.js
+      - ./services/frontend/package.json:/opt/services/frontend/package.json
+    environment:
+      - REACT_APP_FACEBOOK_PUBLIC_APP_ID=275958890324461
+      - REACT_APP_GOOGLE_OAUTH_CLIENT_ID=1056705734975-0d6en9d0t8ii656410png644b32b07dv.apps.googleusercontent.com
+    stdin_open: true
+    networks:
+      - deepmux
+
+networks:
+  deepmux:
+    external:
+      name: deepmux

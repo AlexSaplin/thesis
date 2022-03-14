@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: {{.Namespace}}
+    labels:
+      name: production
+      app: {{.Name}}
+- apiVersion: networking.k8s.io/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      nginx.ingress.kubernetes.io/client-body-buffer-size: 1100K
+      nginx.ingress.kubernetes.io/proxy-body-size: 64m
+    name: {{.Name}}
+    namespace: {{.Namespace}}
+  spec:
+    rules:
+      - host: {{.DNS}}
+        http:
+          paths:
+            - backend:
+                serviceName: {{.Name}}
+                servicePort: {{.Port}}
+              path: /
+    #tls:
+    #  - hosts:
+    #      - {{.DNS}}
+{{if ne .Auth ""}}
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: pullsecret
+    namespace: {{.Namespace}}
+  data:
+    .dockerconfigjson: {{.Auth}}
+  type: kubernetes.io/dockerconfigjson
+{{end}}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: {{.Name}}
+    name: {{.Name}}
+    namespace: {{.Namespace}}
+  spec:
+    ports:
+    - port: {{.Port}}
+      protocol: TCP
+      targetPort: {{.Port}}
+    selector:
+      app: {{.Name}}
+    type: ClusterIP
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: {{.Name}}
+    labels:
+      app: {{.Name}}
+      appid: {{.Namespace}}
+    namespace: {{.Namespace}}
+  spec:
+    replicas: {{.Scale}}
+    selector:
+      matchLabels:
+        app: {{.Name}}
+    template:
+      metadata:
+        labels:
+          app: {{.Name}}
+          appid: {{.Namespace}}
+      spec:
+        restartPolicy: Always
+        nodeSelector:
+          gpu: {{.GPU}}
+        {{if ne .Auth ""}}
+        imagePullSecrets:
+        - name: pullsecret
+        {{end}}
+        containers:
+        - name: {{.Name}}
+          image: {{.Image}}
+          imagePullPolicy: Always
+          ports:
+          - containerPort: {{.Port}}
+          env:
+          {{ range .Env }}
+          - name: "{{ .Key }}"
+            value: "{{ .Value }}"
+          {{ end }}
+          resources:
+            requests:
+              memory: "{{.MemoryMB}}Mi"
+              cpu: "{{.CPU}}m"
+              {{if ne .GPU "none"}}
+              nvidia.com/gpu: 1
+              {{end}}
+            limits:
+              memory: "{{.MemoryMB}}Mi"
+              cpu: "{{.CPU}}m"
+              {{if ne .GPU "none"}}
+              nvidia.com/gpu: 1
+              {{end}}
+          #readinessProbe:
+          #  tcpSocket:
+          #    port: {{.Port}}
+          #  initialDelaySeconds: 10
+          #  periodSeconds: 30

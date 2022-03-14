@@ -1,0 +1,8 @@
+{
+  "server": {
+    "bind": ":8085"
+  },
+  "db": {
+    "target": "postgres://postgres:postgres@127.0.0.1:5433/postgres?sslmode=disable"
+  }
+}

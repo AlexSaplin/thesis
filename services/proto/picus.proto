@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package picus;
+
+service Picus {
+  rpc GetFunctionLogs(GetFunctionLogsRequest) returns (GetFunctionLogsReply);
+  rpc StreamFunctionLogs(StreamFunctionLogsRequest) returns (stream LogEntry);
+}
+
+message GetFunctionLogsRequest {
+  string function_id = 1;
+}
+
+message StreamFunctionLogsRequest {
+  string function_id = 1;
+}
+
+message LogEntry {
+  string function_id = 1;
+  google.protobuf.Timestamp time = 2;
+  string message = 3;
+}
+
+message GetFunctionLogsReply {
+  repeated LogEntry entries = 1;
+}
+

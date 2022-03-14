@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package Rhino;
+
+//The Rhino service definition.
+service Rhino {
+ rpc Run (RunRequest) returns (RunReply);
+}
+
+
+message RunRequest {
+    string          FunctionID = 1;
+    bytes Data = 2;
+}
+
+message RunReply {
+    bytes Data = 1;
+}
